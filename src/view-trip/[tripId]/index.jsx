@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import InfoSection from "../components/InfoSection";
 import Hotels from "../components/Hotels";
 import Itinerary from "../components/Itinerary";
+import LeafletTripMap from "../components/ItineraryMap";
 const ViewTrip = () => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState([]);
@@ -35,6 +36,8 @@ const ViewTrip = () => {
       <Hotels trip={trip} />
       {/* Daily Plan */}
       <Itinerary trip={trip} />
+
+      <LeafletTripMap trip={trip} />
       {/* Footer (not necessary) */}
     </div>
   );
