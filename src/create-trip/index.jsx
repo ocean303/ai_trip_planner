@@ -189,7 +189,7 @@ const index = () => {
       <div className="flex flex-col w-full max-w-2xl mb-8">
         <label className="text-black text-2xl font-semibold mb-2 flex items-center gap-2">
           What is your Destination?
-          <VoiceInputButton 
+          <VoiceInputButton
             onTranscript={handleVoiceInput}
             className="ml-2"
           />
@@ -209,7 +209,7 @@ const index = () => {
       <div className="flex flex-col w-full max-w-2xl mb-8">
         <label className="text-black text-2xl font-semibold mb-2 flex items-center gap-2">
           For how many days are you planning?
-          <VoiceInputButton 
+          <VoiceInputButton
             onTranscript={handleVoiceInput}
             className="ml-2"
           />
@@ -229,7 +229,7 @@ const index = () => {
           <h2 className="text-black text-2xl font-semibold">
             What is your budget?
           </h2>
-          <VoiceInputButton 
+          <VoiceInputButton
             onTranscript={handleVoiceInput}
             className="ml-2"
           />
@@ -238,11 +238,10 @@ const index = () => {
           {SelectBudgetOptions.map((item, index) => (
             <div
               key={index}
-              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${
-                formData?.budget === item.title
+              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${formData?.budget === item.title
                   ? "shadow-lg bg-blue-600 text-white"
                   : "bg-white"
-              }`}
+                }`}
               onClick={() => handleInputChange("budget", item.title)}
             >
               <div className="flex flex-col items-center text-center">
@@ -261,7 +260,7 @@ const index = () => {
           <h2 className="text-black text-2xl font-semibold">
             Who do you plan on travelling with?
           </h2>
-          <VoiceInputButton 
+          <VoiceInputButton
             onTranscript={handleVoiceInput}
             className="ml-2"
           />
@@ -270,11 +269,10 @@ const index = () => {
           {SelectTravelList.map((item, index) => (
             <div
               key={index}
-              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${
-                formData?.noOfPeople === item.people
+              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${formData?.noOfPeople === item.people
                   ? "shadow-lg bg-blue-600 text-white"
                   : "bg-white"
-              }`}
+                }`}
               onClick={() => handleInputChange("noOfPeople", item.people)}
             >
               <div className="flex items-center justify-center">
