@@ -39,10 +39,10 @@ const CreateTrip = () => {
     console.log(formData);
   }, [formData]);
 
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
-    onError: (error) => console.log(error),
-  });
+  // const login = useGoogleLogin({
+  //   onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
+  //   onError: (error) => console.log(error),
+  // });
 
   const handleSelect = _.debounce((value) => {
     setPlace(value);
@@ -50,12 +50,12 @@ const CreateTrip = () => {
   }, 1000);
 
   const onGenerateTrip = async () => {
-    const user = localStorage.getItem("user");
+    // const user = localStorage.getItem("user");
 
-    if (!user) {
-      setOpenDialog(true);
-      return;
-    }
+    // if (!user) {
+    //   setOpenDialog(true);
+    //   return;
+    // }
 
     if (formData?.noOfDays > 7) {
       toast("Please enter no. of days less than 8");
@@ -115,7 +115,7 @@ const CreateTrip = () => {
     await setDoc(doc(db, "AITrips", docId), {
       userChoice: formData,
       tripData: JSON.parse(TripData),
-      userEmail: user?.email,
+      userEmail: "vedantchaudhari174@gmail.com",
       id: docId,
     });
     navigate("/view-trip/" + docId);
@@ -171,11 +171,10 @@ const CreateTrip = () => {
           {SelectBudgetOptions.map((item, index) => (
             <div
               key={index}
-              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${
-                formData?.budget === item.title
-                  ? "shadow-lg bg-blue-600 text-white"
-                  : "bg-white"
-              }`}
+              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${formData?.budget === item.title
+                ? "shadow-lg bg-blue-600 text-white"
+                : "bg-white"
+                }`}
               onClick={() => handleInputChange("budget", item.title)}
             >
               <div className="flex flex-col items-center text-center">
@@ -197,11 +196,10 @@ const CreateTrip = () => {
           {SelectTravelList.map((item, index) => (
             <div
               key={index}
-              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${
-                formData?.noOfPeople === item.people
-                  ? "shadow-lg bg-blue-600 text-white"
-                  : "bg-white"
-              }`}
+              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${formData?.noOfPeople === item.people
+                ? "shadow-lg bg-blue-600 text-white"
+                : "bg-white"
+                }`}
               onClick={() => handleInputChange("noOfPeople", item.people)}
             >
               <div className="flex items-center justify-center">
@@ -234,9 +232,9 @@ const CreateTrip = () => {
               <div className="flex flex-col items-center">
                 <img src="/logo.png" alt="Logo" className="w-20 mb-4" />
                 <span>Sign in with Google Authentication securely</span>
-                <Button onClick={login} className="w-full mt-5">
+                {/* <Button onClick={login} className="w-full mt-5">
                   Sign in with Google
-                </Button>
+                </Button> */}
               </div>
             </DialogDescription>
           </DialogHeader>

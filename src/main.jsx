@@ -25,19 +25,19 @@ const router = createBrowserRouter([
     element: <ViewTrip />,
   },
   {
-    path: "/my-trip", 
-    element : <MyTrips/>
+    path: "/my-trip",
+    element: <MyTrips />
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
-      <ParallaxProvider>
-        <Header />
-        <Toaster />
-        <RouterProvider router={router} />
-      </ParallaxProvider>
-    </GoogleOAuthProvider>
+    {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}> */}
+    <ParallaxProvider>
+      <Header />
+      <Toaster />
+      <RouterProvider router={router} />
+    </ParallaxProvider>
+    {/* </GoogleOAuthProvider> */}
   </React.StrictMode>
 );
