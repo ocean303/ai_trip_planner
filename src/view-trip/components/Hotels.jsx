@@ -39,7 +39,7 @@ const Hotels = ({ trip }) => {
       </div>
       <div className="slider-container">
         <Slider {...settings}>
-          {trip?.tripData?.hotels?.map((h, i) => (
+          {trip?.tripData?.hotelOptions?.map((h, i) => (
             <div key={i} className="p-2">
               <HotelCardItem h={h} />
             </div>

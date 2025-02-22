@@ -17,7 +17,7 @@ const HotelCardItem = ({ h }) => {
     try {
       const response = await fetch(
         `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-          h.name + " luxury hotel exterior"
+          h.name + "hotel rooms"
         )}&orientation=landscape&per_page=1&client_id=${UNSPLASH_API_KEY}`
       );
       const data = await response.json();
