@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import axios from "axios";
 import { Menu, X } from "lucide-react"; // Import icons for mobile menu
+import path from "path";
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -56,6 +57,7 @@ const Header = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Create Itinery", path: "/create-trip" },
+    { name: "Translate", path: "/scan-text" },
     { name: "Travel Guide", path: "/guide" },
     { name: "About Us", path: "/about" },
     { name: "Contact", path: "/contact" },
@@ -122,9 +124,9 @@ const Header = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden ml-2">
-            <Button 
-              variant="ghost" 
-              className="p-1" 
+            <Button
+              variant="ghost"
+              className="p-1"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}

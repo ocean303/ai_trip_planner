@@ -6,7 +6,7 @@
 //       "https://places.googleapis.com/v1/places:searchText",
 //       {
 //         headers: {
-//           Authorization: `Bearer AIzaSyDGfDWOQ0vk1Z_4-Wbh0-J3XgzH917ELIQ`,
+//           Authorization: 'AIzaSyBPRzZN0cd_I-1DPllUVQv0Qz7rFvLhoDs',
 //           // Include other headers if necessary
 //         },
 //       }

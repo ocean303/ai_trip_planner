@@ -115,7 +115,7 @@ const CreateTrip = () => {
     await setDoc(doc(db, "AITrips", docId), {
       userChoice: formData,
       tripData: JSON.parse(TripData),
-      userEmail: "vedantchaudhari174@gmail.com",
+      userEmail: user?.email,
       id: docId,
     });
     navigate("/view-trip/" + docId);
@@ -142,6 +142,7 @@ const CreateTrip = () => {
         </label>
         <GooglePlacesAutocomplete
           apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+          // apiKey="AIzaSyBFjMkBwjvDo17f7CxraTuax2UufVKPUJ0"
           selectProps={{
             placeholder: "Search for places...",
             onChange: handleSelect,
