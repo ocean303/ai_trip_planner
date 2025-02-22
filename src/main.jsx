@@ -10,6 +10,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import ViewTrip from "./view-trip/[tripId]/index.jsx"; // Ensure correct file extension
 import { ParallaxProvider } from "react-scroll-parallax";
 import MyTrips from "./my-trips/index.jsx";
+import LiveScanner from "./imagescanner/Scanner.jsx";
+import Scanner from "./imagescanner/Scanner.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,17 +29,20 @@ const router = createBrowserRouter([
   {
     path: "/my-trip",
     element: <MyTrips />
+  }, {
+    path: "/scan-text",
+    element: <Scanner />
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
-    <ParallaxProvider>
-      <Header />
-      <Toaster />
-      <RouterProvider router={router} />
-    </ParallaxProvider>
+      <ParallaxProvider>
+        <Header />
+        <Toaster />
+        <RouterProvider router={router} />
+      </ParallaxProvider>
     </GoogleOAuthProvider>
   </React.StrictMode>
 );

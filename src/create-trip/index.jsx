@@ -196,6 +196,7 @@ const index = () => {
         </label>
         <GooglePlacesAutocomplete
           apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+          // apiKey="AIzaSyBFjMkBwjvDo17f7CxraTuax2UufVKPUJ0"
           selectProps={{
             placeholder: "Search for places...",
             onChange: handleSelect,
