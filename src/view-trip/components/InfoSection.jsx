@@ -1,56 +1,59 @@
-import { GetPlaceDetails } from "@/service/GlobalApi";
 import React, { useEffect, useState } from "react";
 
-// const PHOTO_REF_URL =
-//   "https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=600&maxWidthPx=600&key=" +
-//   import.meta.env.VITE_GOOGLE_PLACE_API_KEY;
-const PHOTO_REF_URL =
-  "https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference={NAME}&key=" +
-  import.meta.env.VITE_GOOGLE_PLACE_API_KEY;
+const UNSPLASH_API_URL = "https://api.unsplash.com/search/photos";
+const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 const InfoSection = ({ trip }) => {
-  const [photoUrl, setPhotoUrl] = useState();
+  const [photoUrl, setPhotoUrl] = useState(null);
+
   useEffect(() => {
-    trip && GetPlacePhoto();
+    if (trip) fetchUnsplashImage();
   }, [trip]);
 
-  const GetPlacePhoto = async () => {
-    const data = {
-      textQuery: trip?.userChoice?.location?.label,
-    };
-    const result = await GetPlaceDetails(data).then((resp) => {
-      console.log(resp.data.places[0].photos[3].name);
+  const fetchUnsplashImage = async () => {
+    if (!trip?.userChoice?.location?.label) return;
 
-      const PhotoUrl = PHOTO_REF_URL.replace(
-        "{NAME}",
-        resp.data.places[0].photos[3].name
+    try {
+      const response = await fetch(
+        `${UNSPLASH_API_URL}?query=${trip.userChoice.location.label}&client_id=${ACCESS_KEY}&per_page=1`
       );
-      console.log(PhotoUrl);
-      setPhotoUrl(PhotoUrl);
-    });
+      const data = await response.json();
+
+      if (data.results.length > 0) {
+        setPhotoUrl(data.results[0].urls.regular);
+      } else {
+        console.warn("No images found on Unsplash.");
+      }
+    } catch (error) {
+      console.error("Error fetching image from Unsplash:", error);
+    }
   };
+
   return (
     <div className="flex justify-between items-center mt-12 md:mx-16 lg:mx-48 p-6 rounded-lg shadow-lg">
-      <img
-        className="h-40 w-40 rounded-full object-cover"
-        src={photoUrl}
-        alt="Trip Image"
-      />
+      {photoUrl ? (
+        <img
+          className="h-40 w-40 rounded-full object-cover"
+          src={photoUrl}
+          alt="Trip Image"
+        />
+      ) : (
+        <div className="h-40 w-40 bg-gray-200 rounded-full flex items-center justify-center">
+          No Image
+        </div>
+      )}
       <div className="flex flex-col ml-6 items-end">
         <div className="text-4xl font-bold mb-2 flex items-center">
           🗺️ {trip?.userChoice?.location?.label}
         </div>
         <div className="text-xl mb-1 flex items-center">
-          📅 <span className="font-semibold ml-2">Duration:</span>
-          {trip?.userChoice?.noOfDays} days
+          📅 <span className="font-semibold ml-2">Duration:</span> {trip?.userChoice?.noOfDays} days
         </div>
         <div className="text-xl mb-1 flex items-center">
-          💰 <span className="font-semibold ml-2">Budget:</span>
-          {trip?.userChoice?.budget}
+          💰 <span className="font-semibold ml-2">Budget:</span> {trip?.userChoice?.budget}
         </div>
         <div className="text-xl flex items-center">
-          👥 <span className="font-semibold ml-2">Traveling with:</span>
-          {trip?.userChoice?.noOfPeople}
+          👥 <span className="font-semibold ml-2">Traveling with:</span> {trip?.userChoice?.noOfPeople}
         </div>
       </div>
     </div>

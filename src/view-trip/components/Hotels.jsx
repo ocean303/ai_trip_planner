@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaAngleRight } from "react-icons/fa6";
 const Hotels = ({ trip }) => {
+  console.log(trip);
   const settings = {
     infinite: true,
     speed: 500,
@@ -38,7 +39,7 @@ const Hotels = ({ trip }) => {
       </div>
       <div className="slider-container">
         <Slider {...settings}>
-          {trip?.tripData?.hotel?.map((h, i) => (
+          {trip?.tripData?.hotels?.map((h, i) => (
             <div key={i} className="p-2">
               <HotelCardItem h={h} />
             </div>

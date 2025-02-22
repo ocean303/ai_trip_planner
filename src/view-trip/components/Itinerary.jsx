@@ -17,9 +17,13 @@ const Itinerary = ({ trip }) => {
           >
             <h3 className="text-2xl font-semibold mb-4">{item?.day}</h3>
             <div className="space-y-6">
-              {item?.plan?.map((plan, index) => (
+              {/* {item?.plan?.map((plan, index) => (
+                <ItineraryCard plan={plan} key={index} />
+              ))} */}
+              {(item?.plan || []).map((plan, index) => (
                 <ItineraryCard plan={plan} key={index} />
               ))}
+
             </div>
           </div>
         ))}
