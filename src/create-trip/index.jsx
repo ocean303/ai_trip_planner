@@ -39,10 +39,10 @@ const CreateTrip = () => {
     console.log(formData);
   }, [formData]);
 
-  // const login = useGoogleLogin({
-  //   onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
-  //   onError: (error) => console.log(error),
-  // });
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
+    onError: (error) => console.log(error),
+  });
 
   const handleSelect = _.debounce((value) => {
     setPlace(value);
@@ -50,12 +50,12 @@ const CreateTrip = () => {
   }, 1000);
 
   const onGenerateTrip = async () => {
-    // const user = localStorage.getItem("user");
+    const user = localStorage.getItem("user");
 
-    // if (!user) {
-    //   setOpenDialog(true);
-    //   return;
-    // }
+    if (!user) {
+      setOpenDialog(true);
+      return;
+    }
 
     if (formData?.noOfDays > 7) {
       toast("Please enter no. of days less than 8");

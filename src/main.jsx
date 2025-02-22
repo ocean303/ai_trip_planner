@@ -32,12 +32,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}> */}
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
     <ParallaxProvider>
       <Header />
       <Toaster />
       <RouterProvider router={router} />
     </ParallaxProvider>
-    {/* </GoogleOAuthProvider> */}
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );

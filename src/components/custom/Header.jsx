@@ -26,32 +26,32 @@ const Header = () => {
     console.log(user);
   }, []);
 
-  // const GetUserProfile = (tokenInfo) => {
-  //   axios
-  //     .get(
-  //       `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo.access_token}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${tokenInfo.access_token}`,
-  //           Accept: "application/json",
-  //         },
-  //       }
-  //     )
-  //     .then((resp) => {
-  //       console.log(resp.data);
-  //       localStorage.setItem("user", JSON.stringify(resp.data));
-  //       setOpenDialog(false);
-  //       window.location.reload();
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching user profile:", error);
-  //     });
-  // };
+  const GetUserProfile = (tokenInfo) => {
+    axios
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenInfo.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp.data);
+        localStorage.setItem("user", JSON.stringify(resp.data));
+        setOpenDialog(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error fetching user profile:", error);
+      });
+  };
 
-  // const login = useGoogleLogin({
-  //   onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
-  //   onError: (error) => console.log(error),
-  // });
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
+    onError: (error) => console.log(error),
+  });
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -159,9 +159,9 @@ const Header = () => {
               <div className="flex flex-col items-center">
                 <img src="/logo.png" alt="Logo" className="w-20 mb-4" />
                 <span>Sign in with Google Authentication securely</span>
-                {/* <Button onClick={login} className="w-full mt-5">
+                <Button onClick={login} className="w-full mt-5">
                   Sign in with Google
-                </Button> */}
+                </Button>
               </div>
             </DialogDescription>
           </DialogHeader>
