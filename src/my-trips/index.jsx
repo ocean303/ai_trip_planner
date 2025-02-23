@@ -7,7 +7,7 @@ import UserTripCardItem from "./components/UserTripCardItem";
 const MyTrips = () => {
   const navigation = useNavigation();
   const [userTrips, setUserTrips] = useState([]);
-  // using to get all trips of a user
+
   const GetUserTrips = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
@@ -19,18 +19,21 @@ const MyTrips = () => {
       collection(db, "AITrips"),
       where("userEmail", "==", user?.email)
     );
+
     setUserTrips([]);
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       console.log(doc.id, " => ", doc.data());
-      setUserTrips((prevVal) => [...prevVal, doc.data()]);
+      setUserTrips((prevVal) => [...prevVal, { id: doc.id, ...doc.data() }]);
     });
   };
+
   useEffect(() => {
     GetUserTrips();
   }, []);
+
   return (
-    <div className="p-10 md: px-20 lg:px-36">
+    <div className="p-10 md:px-20 lg:px-36">
       <h2 className="font-bold text-4xl text-center">My Trips</h2>
       <div className="grid grid-cols-2 mt-10 md:grid-cols-3 gap-5">
         {userTrips.map((trip, index) => (

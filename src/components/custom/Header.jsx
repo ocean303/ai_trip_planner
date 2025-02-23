@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/dialog";
 import axios from "axios";
 import { Menu, X } from "lucide-react"; // Import icons for mobile menu
-import path from "path";
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -56,7 +55,7 @@ const Header = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Create Itinery", path: "/create-trip" },
+    { name: "Create Itinerary", path: "/create-trip" },
     { name: "Translate", path: "/scan-text" },
     { name: "Travel Guide", path: "/guide" },
     { name: "About Us", path: "/about" },
@@ -64,7 +63,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 px-4 py-2 shadow-md bg-white">
+    <header className="sticky top-0 z-50 px-4 py-3 shadow-md bg-white">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="flex-shrink-0">
@@ -72,12 +71,12 @@ const Header = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-4">
+        <nav className="hidden md:flex space-x-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.path}
-              className="text-gray-700 hover:text-blue-600 px-2 py-1 text-sm font-medium transition-colors"
+              className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
             >
               {link.name}
             </a>
@@ -85,21 +84,21 @@ const Header = () => {
         </nav>
 
         {/* Auth Section */}
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center gap-x-4">
           {user ? (
             <>
               <a href="/my-trip" className="hidden sm:block">
-                <Button variant="outline" className="rounded-full text-sm py-1 px-3">
+                <Button variant="outline" className="rounded-full text-sm py-1.5 px-4">
                   My Trips
                 </Button>
               </a>
               <Popover>
                 <PopoverTrigger>
-                  <img className="h-8 w-8 rounded-full" src={user?.picture} alt="Profile" />
+                  <img className="h-9 w-9 rounded-full cursor-pointer hover:opacity-80 transition-opacity" src={user?.picture} alt="Profile" />
                 </PopoverTrigger>
-                <PopoverContent>
-                  <div className="py-2">
-                    <a href="/my-trip" className="block sm:hidden px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <PopoverContent className="w-48 p-2 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <div className="flex flex-col">
+                    <a href="/my-trip" className="block sm:hidden px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
                       My Trips
                     </a>
                     <Button
@@ -108,7 +107,7 @@ const Header = () => {
                         localStorage.clear();
                         window.location.reload();
                       }}
-                      className="w-full text-sm rounded-lg p-2 mt-1"
+                      className="w-full text-sm rounded-md p-2 mt-1 hover:bg-gray-100"
                     >
                       Logout
                     </Button>
@@ -117,7 +116,7 @@ const Header = () => {
               </Popover>
             </>
           ) : (
-            <Button onClick={() => setOpenDialog(true)} className="text-sm py-1 px-3">
+            <Button onClick={() => setOpenDialog(true)} className="text-sm py-1.5 px-4">
               Sign in
             </Button>
           )}
@@ -126,10 +125,11 @@ const Header = () => {
           <div className="md:hidden ml-2">
             <Button
               variant="ghost"
-              className="p-1"
+              className="p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle mobile menu"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
           </div>
         </div>
@@ -137,13 +137,13 @@ const Header = () => {
 
       {/* Mobile Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute left-0 right-0 bg-white shadow-md z-50 mt-2 px-4 py-2">
-          <nav className="flex flex-col space-y-2">
+        <div className="md:hidden fixed inset-0 bg-white z-50 mt-16 px-4 py-4">
+          <nav className="flex flex-col space-y-3">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.path}
-                className="text-gray-700 hover:text-blue-600 py-2 text-sm font-medium transition-colors border-b border-gray-100"
+                className="text-gray-700 hover:text-blue-600 py-2.5 text-sm font-medium transition-colors duration-200 border-b border-gray-100"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}
@@ -153,14 +153,14 @@ const Header = () => {
         </div>
       )}
 
-      <Dialog open={openDialog}>
-        <DialogContent>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Sign In</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-center">Sign In</DialogTitle>
+            <DialogDescription className="text-center">
               <div className="flex flex-col items-center">
                 <img src="/logo.png" alt="Logo" className="w-20 mb-4" />
-                <span>Sign in with Google Authentication securely</span>
+                <span className="text-gray-600">Sign in with Google Authentication securely</span>
                 <Button onClick={login} className="w-full mt-5">
                   Sign in with Google
                 </Button>

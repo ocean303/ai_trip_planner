@@ -12,6 +12,7 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import MyTrips from "./my-trips/index.jsx";
 import LiveScanner from "./imagescanner/Scanner.jsx";
 import Scanner from "./imagescanner/Scanner.jsx";
+import Contact from "./components/custom/contact.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,14 @@ const router = createBrowserRouter([
   {
     path: "/my-trip",
     element: <MyTrips />
-  }, {
+  }, 
+  {
     path: "/scan-text",
     element: <Scanner />
+  },
+  {
+    path: "/contact",
+    element: <Contact />
   }
 ]);
 
