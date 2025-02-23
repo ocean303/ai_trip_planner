@@ -8,20 +8,18 @@ const HotelCardItem = ({ h }) => {
   const [photoUrl, setPhotoUrl] = useState("");
 
   useEffect(() => {
-    if (h) {
-      fetchHotelImage();
-    }
+    fetchHotelImage();
   }, [h]);
 
+  // Fetch hotel image from Unsplash API
   const fetchHotelImage = async () => {
     try {
       const response = await fetch(
         `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-          h.name + "hotel rooms"
+          h.name + " hotel"
         )}&orientation=landscape&per_page=1&client_id=${UNSPLASH_API_KEY}`
       );
       const data = await response.json();
-
       if (data.results.length > 0) {
         setPhotoUrl(data.results[0].urls.regular);
       } else {
@@ -51,6 +49,11 @@ const HotelCardItem = ({ h }) => {
             </div>
           </div>
           <div className="w-full px-8 my-1 text-md">{h.address}</div>
+
+          {/* Display hotel price */}
+          {/* <div className="w-full px-8 my-2 text-xl font-bold text-blue-600">
+            Price: {price} USD
+          </div> */}
         </div>
       </Link>
     </div>

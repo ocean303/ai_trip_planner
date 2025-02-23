@@ -15,7 +15,8 @@ import LiveScanner from "./imagescanner/Scanner.jsx";
 import Scanner from "./imagescanner/Scanner.jsx";
 import Contact from "./components/custom/contact.jsx";
 import EmergencyServices from "./Emergency/index.jsx";
-import Chatbot from "./view-trip/components/Chatbot.jsx"; 
+import Chatbot from "./view-trip/components/Chatbot.jsx";
+import TransportPage from "./transport/Transportservice.jsx";
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,9 @@ const router = createBrowserRouter([
     {
         path: "/contact",
         element: <Contact />
+    }, {
+        path: "/transport",
+        element: <TransportPage />
     },
     {
         path: "/chatbot",
