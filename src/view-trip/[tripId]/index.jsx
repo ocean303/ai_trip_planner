@@ -12,6 +12,7 @@ import Events from "../components/events";
 import Chat from "../components/Chatbot";
 import CarbonCalc from "../components/CarbonFtpr";
 import AerialMap from "../components/3Dmap";
+import Safetynews from "../components/SafetyNews";
 
 const ViewTrip = () => {
   const { tripId } = useParams();
@@ -60,7 +61,7 @@ const ViewTrip = () => {
     { id: 'map', label: 'Map', component: <LeafletTripMap trip={trip} /> },
     { id: 'AirMap', label: 'Visualize Journey', component: <AerialMap trip={trip} /> },
     { id: 'finance', label: 'Financial Forecast', component: <Finance trip={trip} /> },
-    { id: 'Chat', label: 'ChatBot', component: <Chat trip={trip} /> },
+    { id: 'News', label: 'Safety consideration', component: <Safetynews trip={trip} /> },
     { id: 'CarbonCalc', label: 'Carbon footprint analyser', component: <CarbonCalc itineraryData={trip} /> }
     
   ];
