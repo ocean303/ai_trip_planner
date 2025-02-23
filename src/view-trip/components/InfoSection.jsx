@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
 import { WiDaySunny, WiCloud, WiRain, WiSnow, WiFog } from "react-icons/wi";
 import { FiSunrise, FiSunset, FiAlertTriangle, FiPhone, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 const InfoSection = ({ trip }) => {
+  const navigate = useNavigate();
   const [photoUrl, setPhotoUrl] = useState(null);
   const [weather, setWeather] = useState(null);
   const [emergencyServices, setEmergencyServices] = useState([]);
@@ -111,16 +113,17 @@ const InfoSection = ({ trip }) => {
         )}
 
         {/* Emergency Services Toggle Button */}
-        <button onClick={() => setShowEmergency(!showEmergency)} className="mt-6 px-4 py-2 bg-red-500 text-white rounded-lg flex items-center justify-between w-full transition hover:bg-red-600">
+        <button
+          onClick={() => navigate("/emergency", { state: { trip } })}
+          className="mt-6 px-4 py-2 bg-red-500 text-white rounded-lg flex items-center justify-between w-full transition hover:bg-red-600"
+        >
           <span className="font-semibold flex items-center">
             <FiAlertTriangle className="mr-2" />
-            Emergency Services
+            View Emergency Services
           </span>
-          {showEmergency ? <FiChevronUp /> : <FiChevronDown />}
         </button>
-
         {/* Emergency Services Section (Visible only when clicked) */}
-        {showEmergency && (
+        {/* {showEmergency && (
           <div className="mt-4 p-6 bg-white/30 backdrop-blur-md rounded-2xl shadow-lg">
             {emergencyServices.length > 0 ? (
               emergencyServices.map((service, index) => (
@@ -134,7 +137,7 @@ const InfoSection = ({ trip }) => {
               <p className="text-gray-600">No emergency services found.</p>
             )}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

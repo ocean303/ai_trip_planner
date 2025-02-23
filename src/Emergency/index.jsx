@@ -1,179 +1,104 @@
-import React, { useEffect, useState } from 'react';
-import { AlertCircle, Phone } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { FiPhone } from "react-icons/fi";
+import { FaAmbulance, FaShieldAlt, FaFireExtinguisher, FaMapMarkerAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-const EmergencyServicesPage = ({ tripData }) => {
-  const [services, setServices] = useState({
-    hospitals: [],
-    police: []
-  });
+const EmergencyServices = () => {
+  const location = useLocation();
+  const { trip } = location.state || {};
+  const [emergencyServices, setEmergencyServices] = useState({ hospitals: [], police: [], fire: [] });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const PLACES_API_KEY = 'AIzaSyBPRzZN0cd_I-1DPllUVQv0Qz7rFvLhoDs';
-
-  const getPlaceDetails = async (placeId) => {
-    try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=formatted_phone_number,international_phone_number&key=${PLACES_API_KEY}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return {
-        phoneNumber: data.result.formatted_phone_number || data.result.international_phone_number,
-      };
-    } catch (error) {
-      console.error('Error fetching place details:', error);
-      return { phoneNumber: null };
-    }
-  };
-
-  const searchNearbyPlaces = async (location, type) => {
-    try {
-      if (!location?.geoCoordinates) {
-        throw new Error('No coordinates found for location');
-      }
-
-      const [lat, lng] = location.geoCoordinates.split(',').map(coord => coord.trim());
-      
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=5000&type=${type}&key=${PLACES_API_KEY}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      
-      // Get only first 5 results and fetch their details
-      const placesWithDetails = await Promise.all(
-        data.results.slice(0, 5).map(async (result) => {
-          const details = await getPlaceDetails(result.place_id);
-          return {
-            name: result.name,
-            address: result.vicinity,
-            location: result.geometry.location,
-            rating: result.rating,
-            phoneNumber: details.phoneNumber,
-            placeId: result.place_id
-          };
-        })
-      );
-
-      return placesWithDetails;
-
-    } catch (error) {
-      console.error(`Error fetching ${type}:`, error);
-      setError(`Failed to fetch ${type} locations`);
-      return [];
-    }
-  };
+  const [activeTab, setActiveTab] = useState("hospitals");
 
   useEffect(() => {
-    const findEmergencyServices = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        if (!tripData?.tripData?.itinerary?.[0]?.plan?.[0]) {
-          throw new Error('Invalid trip data structure');
-        }
-
-        const location = tripData.tripData.itinerary[0].plan[0];
-        
-        const [hospitals, policeStations] = await Promise.all([
-          searchNearbyPlaces(location, 'hospital'),
-          searchNearbyPlaces(location, 'police')
-        ]);
-
-        setServices({
-          hospitals,
-          police: policeStations
-        });
-        
-      } catch (error) {
-        console.error('Error finding emergency services:', error);
-        setError('Failed to load emergency services');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (tripData) {
-      findEmergencyServices();
+    if (trip?.userChoice?.location?.label) {
+      fetchEmergencyServices();
     }
-  }, [tripData]);
+  }, [trip]);
 
-  const ServiceCard = ({ service }) => (
-    <div className="p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-      <h3 className="font-medium">{service.name}</h3>
-      <p className="text-gray-600 mt-1">{service.address}</p>
-      {service.phoneNumber && (
-        <div className="flex items-center gap-2 mt-2 text-blue-600">
-          <Phone className="h-4 w-4" />
-          <a href={`tel:${service.phoneNumber}`} className="hover:underline">
-            {service.phoneNumber}
-          </a>
-        </div>
-      )}
-      {service.rating && (
-        <p className="text-sm text-gray-500 mt-2">Rating: {service.rating} ⭐</p>
-      )}
-    </div>
-  );
+  const fetchEmergencyServices = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/emergency-services?location=${encodeURIComponent(trip.userChoice.location.label)}`
+      );
+      const data = await response.json();
+      setEmergencyServices({
+        hospitals: data.filter(service => service.type === "Hospital"),
+        police: data.filter(service => service.type === "Police station"),
+        fire: data.filter(service => service.type === "Fire station"),
+      });
+    } catch (error) {
+      console.error("Error fetching emergency services:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2">
-        <AlertCircle className="h-5 w-5" />
-        <p>{error}</p>
-      </div>
-    );
-  }
+  const tabs = [
+    { key: "hospitals", label: "Hospitals", icon: <FaAmbulance /> },
+    { key: "police", label: "Police", icon: <FaShieldAlt /> },
+    { key: "fire", label: "Fire Services", icon: <FaFireExtinguisher /> },
+  ];
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Nearby Emergency Services</h1>
-      
-      <div className="space-y-8">
-        <section>
-          <h2 className="text-xl font-semibold mb-4">Hospitals</h2>
-          <div className="grid gap-4">
-            {services.hospitals.map((hospital, index) => (
-              <ServiceCard key={index} service={hospital} />
-            ))}
-            {services.hospitals.length === 0 && (
-              <p className="text-gray-500">No hospitals found nearby</p>
-            )}
-          </div>
-        </section>
+    <div className="container mx-auto mt-10 p-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-4 flex items-center">
+        🚨 Emergency Services
+      </h1>
 
-        <section>
-          <h2 className="text-xl font-semibold mb-4">Police Stations</h2>
-          <div className="grid gap-4">
-            {services.police.map((station, index) => (
-              <ServiceCard key={index} service={station} />
-            ))}
-            {services.police.length === 0 && (
-              <p className="text-gray-500">No police stations found nearby</p>
-            )}
-          </div>
-        </section>
+      {/* Tabs */}
+      <div className="flex space-x-4 mb-6">
+        {tabs.map((tab) => (
+          <button
+            key={tab.key}
+            className={`px-4 py-2 rounded-md flex items-center space-x-2 transition-all ${activeTab === tab.key ? "bg-blue-600 text-white shadow-lg" : "bg-gray-200 text-gray-700"
+              }`}
+            onClick={() => setActiveTab(tab.key)}
+          >
+            {tab.icon} <span>{tab.label}</span>
+          </button>
+        ))}
       </div>
+
+      {/* Display Data */}
+      {loading ? (
+        <div className="text-center text-gray-600">Loading emergency services...</div>
+      ) : (
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {emergencyServices[activeTab].length > 0 ? (
+            emergencyServices[activeTab].map((service, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.05 }}
+                className="p-6 border rounded-lg shadow-md bg-white transition transform hover:shadow-xl"
+              >
+                <h2 className="text-xl font-bold text-gray-800">{service.name}</h2>
+                <p className="text-gray-600 flex items-center mt-2">
+                  <FaMapMarkerAlt className="mr-2 text-red-500" />
+                  {service.address}
+                </p>
+                <div className="flex items-center text-blue-600 mt-2">
+                  <FiPhone className="mr-2" />
+                  <a href={`tel:${service.phone}`} className="hover:underline">
+                    {service.phone || "No phone available"}
+                  </a>
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <p className="text-gray-600">No services found for this category.</p>
+          )}
+        </motion.div>
+      )}
     </div>
   );
 };
 
-export default EmergencyServicesPage;
+export default EmergencyServices;
