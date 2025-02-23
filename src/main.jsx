@@ -13,7 +13,7 @@ import MyTrips from "./my-trips/index.jsx";
 import Emergency from "./Emergency/index.jsx";
 import LiveScanner from "./imagescanner/Scanner.jsx";
 import Scanner from "./imagescanner/Scanner.jsx";
-import Contact from "./components/custom/contact.jsx";
+import Contact from "./components/custom/Contact.jsx";
 
 const trip = {
   "userChoice": {
@@ -245,7 +245,7 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <Contact />
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
