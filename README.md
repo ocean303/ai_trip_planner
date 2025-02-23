@@ -1,7 +1,7 @@
 # WANDER
 ## Worldwide Adventure Navigator & Digital Experience Recommender
 
-![WANDER Logo](public\logo.png)
+![WANDER Logo](public/logo.png)
 
 WANDER is an AI-powered travel recommendation system that personalizes your journey based on your preferences, budget, and travel style.
 
