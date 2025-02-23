@@ -7,6 +7,7 @@ import { Parallax } from "react-scroll-parallax"; // Ensure this is installed
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Container } from 'react-bootstrap';
+import { CompassIcon, MapPinIcon } from 'lucide-react';
 import 'react-toastify/dist/ReactToastify.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -108,27 +109,43 @@ const Hero = () => {
 
         {/* Main content container */}
         <div className="relative z-10 h-full w-full">
-          <Container className="h-full flex items-center">
+        <Container className="h-screen bg-transparent">
+          <div className="h-full flex items-center justify-between px-8">
             <Outlet />
+            
+            {/* Hero Card */}
+            <div className="w-full max-w-lg transform hover:scale-[1.02] transition-transform duration-300">
+              <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)]">
+                <div className="space-y-6">
+                  {/* Logo and Title */}
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-blue-600">
+                      <CompassIcon size={32} className="animate-pulse" />
+                    </span>
+                    <h2 className="text-5xl font-extrabold bg-gradient-to-r from-blue-600 to-orange-500 text-transparent bg-clip-text">
+                      W.A.N.D.E.R
+                    </h2>
+                  </div>
 
-            {/* Card positioned on the left */}
-            <div className="w-full max-w-md ml-8 mt-0">
-              <div className="bg-gradient-to-b from-[#dcebfe] to-yellow-100 p-6 rounded-lg shadow-md">
-                {/* Call to Action Section */}
-                <div className="cta-section text-left">
-                  <p className="text-lg mb-4 font-semibold text-black">
-                    Ready to start planning your dream vacation? Share your travel
-                    destination, days, budget, and travel group preferences with us.
+                  {/* Subtitle with enhanced typography */}
+                  <p className="text-xl font-medium text-gray-700 leading-relaxed">
+                    Worldwide Adventure Navigator & 
+                    <span className="block">Digital Experience Recommender</span>
                   </p>
-                  <Link to="/create-trip">
-                    <Button className="py-3 px-6 text-lg font-bold bg-orange-500 hover:bg-orange-600">
-                      Start Planning Now
-                    </Button>
+
+                  {/* CTA Button */}
+                  <Link to="/create-trip" className="block mt-8">
+                    <button className="w-full group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-gradient-to-r from-blue-600 to-orange-500 rounded-xl overflow-hidden transition-all duration-300 hover:from-blue-700 hover:to-orange-600">
+                      <MapPinIcon className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />
+                      Start Your Journey
+                      <span className="absolute right-4 transition-transform group-hover:translate-x-1">→</span>
+                    </button>
                   </Link>
                 </div>
               </div>
             </div>
-          </Container>
+          </div>
+        </Container>
         </div>
       </div>
 

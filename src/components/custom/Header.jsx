@@ -57,7 +57,7 @@ const Header = () => {
     { name: "Home", path: "/" },
     { name: "Create Itinerary", path: "/create-trip" },
     { name: "Translate", path: "/scan-text" },
-    { name: "Travel Guide", path: "/guide" },
+    { name: "Quick create chatbot", path: "/chatbot" },
     { name: "About Us", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
@@ -67,7 +67,7 @@ const Header = () => {
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <img className="w-16 h-auto" src="/logo.png" alt="Logo" />
+          <img className="w-24 h-auto" src="/logo.png" alt="Logo" />
         </div>
 
         {/* Desktop Navigation */}
