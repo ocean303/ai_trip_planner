@@ -17,6 +17,7 @@ import Contact from "./components/custom/contact.jsx";
 import EmergencyServices from "./Emergency/index.jsx";
 import Chatbot from "./view-trip/components/Chatbot.jsx";
 import TransportPage from "./transport/Transportservice.jsx";
+import Travelsongs from "./TravelPlaylist/travelsongs.jsx";
 
 
 const router = createBrowserRouter([
@@ -54,6 +55,9 @@ const router = createBrowserRouter([
     {
         path: "/chatbot",
         element: <Chatbot />
+    }, {
+        path: "/songs",
+        element: <Travelsongs />
     }
 ]);
 
