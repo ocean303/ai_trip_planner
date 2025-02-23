@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import jsPDF from "jspdf";
 
 const UNSPLASH_API_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
@@ -33,9 +34,30 @@ const UserTripCardItem = ({ trip }) => {
     }
   };
 
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(16);
+    doc.text("Trip Details", 20, 20);
+    
+    doc.setFontSize(12);
+    doc.text(`Location: ${trip?.userChoice?.location?.label}`, 20, 40);
+    doc.text(`Duration: ${trip?.userChoice?.noOfDays} days`, 20, 50);
+    doc.text(`Budget: ${trip?.userChoice?.budget}`, 20, 60);
+    
+    doc.text("Trip Data:", 20, 80);
+    doc.setFontSize(10);
+    
+    const tripData = JSON.stringify(trip?.tripData, null, 2);
+    const splitTripData = doc.splitTextToSize(tripData, 170);
+    doc.text(splitTripData, 20, 90);
+    
+    doc.save(`Trip_${trip?.id}.pdf`);
+  };
+
   return (
-    <Link to={`/view-trip/${trip?.id}`}>
-      <div className="hover:scale-105 transition-all hover:shadow-md">
+    <div className="hover:scale-105 transition-all hover:shadow-md p-4 border rounded-lg">
+      <Link to={`/view-trip/${trip?.id}`}>
         <img
           className="object-cover rounded-xl mx-auto w-80 h-64"
           src={photoURL}
@@ -45,8 +67,14 @@ const UserTripCardItem = ({ trip }) => {
         <h2 className="text-sm text-gray-500">
           {trip?.userChoice?.noOfDays} days trip with "{trip?.userChoice?.budget}" budget.
         </h2>
-      </div>
-    </Link>
+      </Link>
+      <button
+        onClick={generatePDF}
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+      >
+        Download Trip PDF
+      </button>
+    </div>
   );
 };
 

@@ -13,6 +13,7 @@ import MyTrips from "./my-trips/index.jsx";
 import Emergency from "./Emergency/index.jsx";
 import LiveScanner from "./imagescanner/Scanner.jsx";
 import Scanner from "./imagescanner/Scanner.jsx";
+import Contact from "./components/custom/contact.jsx";
 
 const trip = {
   "userChoice": {
@@ -217,6 +218,7 @@ const trip = {
   }
 }
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -239,6 +241,10 @@ const router = createBrowserRouter([
   }, {
     path: "/scan-text",
     element: <Scanner />
+  },
+  {
+    path: "/contact",
+    element: <Contact />
   }
 ]);
 
