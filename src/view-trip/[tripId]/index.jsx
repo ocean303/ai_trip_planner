@@ -67,45 +67,45 @@ const ViewTrip = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-gray-50">
-      {/* Info Section - Always visible */}
-      <div className="mb-8">
-        <InfoSection trip={trip} />
-      </div>
+<div className="w-full flex flex-col bg-gray-50">
+  {/* Info Section - Ensure no extra margin or padding */}
+  <div className="mb-8"> {/* Removed margin-bottom */}
+    <InfoSection trip={trip} />
+  </div>
 
-      {/* Custom Tabbed Interface */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Tab Navigation */}
-        <div className="flex border-b border-gray-200 mb-8">
-          {tabData.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`py-4 px-6 text-sm font-medium mr-4 focus:outline-none ${
-                activeTab === tab.id
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Tab Content */}
-        <div className="bg-white rounded-lg shadow p-6">
-          {tabData.find(tab => tab.id === activeTab)?.component}
-        </div>
-      </div>
-
-      {/* Back to top button */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-8 right-8 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300"
-      >
-        ↑
-      </button>
+  {/* Tabbed Interface */}
+  <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
+    {/* Tab Navigation */}
+    <div className="flex border-b border-gray-200">
+      {tabData.map(tab => (
+        <button
+          key={tab.id}
+          onClick={() => setActiveTab(tab.id)}
+          className={`py-4 px-6 text-sm font-medium mr-4 focus:outline-none ${
+            activeTab === tab.id
+              ? 'text-blue-600 border-b-2 border-blue-600'
+              : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          }`}
+        >
+          {tab.label}
+        </button>
+      ))}
     </div>
+
+    {/* Tab Content - Ensure no extra space */}
+    <div className="bg-white rounded-lg shadow p-6 flex-grow">
+      {tabData.find(tab => tab.id === activeTab)?.component}
+    </div>
+  </div>
+
+  {/* Back to top button */}
+  <button
+    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    className="fixed bottom-8 right-8 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300 mb-0"
+  >
+    ↑
+  </button>
+</div>
   );
 };
 

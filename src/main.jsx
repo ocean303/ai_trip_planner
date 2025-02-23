@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTrip from "./create-trip/index.jsx"; // Ensure correct file extension
 import Header from "./components/custom/Header.jsx";
+import Immidiate from "./components/custom/ImmediateEmergency.jsx";
 import { Toaster } from "./components/ui/sonner.jsx"; // Ensure correct file extension
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import ViewTrip from "./view-trip/[tripId]/index.jsx"; // Ensure correct file extension
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
     }, {
         path: "/songs",
         element: <Travelsongs />
+    },
+    {
+        path: "/nearme",
+        element: <Immidiate />
     }
 ]);
 

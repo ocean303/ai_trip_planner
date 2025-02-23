@@ -81,6 +81,13 @@ const Header = () => {
               {link.name}
             </a>
           ))}
+
+          <a
+              href="/nearme"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg text-sm uppercase tracking-wider transition-colors duration-200 flex items-center"
+            >
+              Emergency
+            </a>
         </nav>
 
         {/* Auth Section */}
