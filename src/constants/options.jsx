@@ -3,30 +3,44 @@ export const SelectTravelList = [
     id: 1,
     title: "Solo Adventure",
     desc: "Embark on a journey of self-discovery",
-    icon: "🎒",
-    people: "1 person",
+    icon: "🏃",
+    people: "1 person"
   },
   {
     id: 2,
     title: "Romantic Getaway",
     desc: "Experience the world together",
-    icon: "💑",
-    people: "2 people",
+    icon: "❤️",
+    people: "2 people"
   },
   {
     id: 3,
     title: "Family Fun",
     desc: "Create unforgettable memories with loved ones",
-    icon: "🏠",
-    people: "3 to 4 people",
+    icon: "👨‍👩‍👧‍👦",
+    people: "3 to 4 people"
   },
   {
     id: 4,
     title: "Friends' Escapade",
     desc: "Thrilling adventures with your best pals",
-    icon: "🧑‍🤝‍🧑",
-    people: "5 to 10 people",
+    icon: "👥",
+    people: "5 to 10 people"
   },
+  {
+    id: 5,
+    title: "Small Group Tour",
+    desc: "Perfect for meeting new travel companions",
+    icon: "🌟",
+    people: "8 to 12 people"
+  },
+  {
+    id: 6,
+    title: "Team Building",
+    desc: "Corporate retreat or work event",
+    icon: "💼",
+    people: "10 to 15 people"
+  }
 ];
 
 export const SelectBudgetOptions = [
@@ -34,22 +48,23 @@ export const SelectBudgetOptions = [
     id: 1,
     title: "Budget-Friendly",
     desc: "Travel smart, spend less",
-    icon: "💸",
+    icon: "🪙"
   },
   {
     id: 2,
     title: "Moderate",
     desc: "Balance comfort and cost",
-    icon: "💵",
+    icon: "💰"
   },
   {
     id: 3,
     title: "Luxury",
     desc: "Indulge in lavish experiences",
-    icon: "💎",
-  },
+    icon: "👑"
+  }
 ];
 
+// Rest of the code remains the same...
 export const AI_PROMPT = `
   Generate a travel plan for the destination: {location} for {totalDays} days. 
   Traveler type: {traveler}, with a {budget} budget. 

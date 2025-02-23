@@ -39,13 +39,13 @@ const ItineraryCard = ({ trip }) => {
   }, [trip]);
 
   return (
-    <div className="container mx-auto px-6 py-12">
-      <h2 className="text-4xl font-bold text-center mb-12">Your Journey Timeline</h2>
+    <div className="w-full px-6"> {/* Removed py-6 to eliminate extra padding */}
+      <h2 className="text-4xl font-bold text-center mb-8">Your Journey Timeline</h2>
       <div className="relative">
         <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-200"></div>
         
         {trip?.tripData?.itinerary.map((day, dayIndex) => (
-          <div key={dayIndex} className="mb-16 relative">
+          <div key={dayIndex} className="mb-8 relative"> {/* Reduced margin-bottom */}
             <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center z-10">
               {dayIndex + 1}
             </div>
@@ -53,7 +53,7 @@ const ItineraryCard = ({ trip }) => {
             <div className="relative flex items-start">
               <div className={`w-1/2 ${dayIndex % 2 === 0 ? 'pr-8 text-right' : 'pl-8 ml-auto'}`}>
                 <h3 className="text-2xl font-semibold mb-4">{day.day}</h3>
-                <div className="space-y-6">
+                <div className="space-y-6"> {/* Added space between cards */}
                   {day.plan?.map((plan, planIndex) => (
                     <Link 
                       key={planIndex}
@@ -61,7 +61,7 @@ const ItineraryCard = ({ trip }) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <div className="bg-white rounded-lg shadow-lg p-4 transform transition-all hover:scale-105">
+                      <div className="bg-white rounded-lg shadow-lg p-4 transform transition-all hover:scale-105 mb-6"> {/* Added margin-bottom */}
                         <div className="relative">
                           <img
                             src={photos[plan.placeName] || "https://via.placeholder.com/300"}

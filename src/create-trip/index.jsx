@@ -24,7 +24,7 @@ import { db } from "@/service/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import VoiceInputButton from "./components/VoiceInputButton";
 
-const index = () => {
+const TravelPreferences = () => {
   const [place, setPlace] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,21 +41,17 @@ const index = () => {
 
     switch (type) {
       case 'text':
-        // For destination
         const locationValue = { label: value, value: value };
         setPlace(locationValue);
         handleInputChange("location", locationValue);
         break;
       case 'days':
-        // For number of days
         handleInputChange("noOfDays", value);
         break;
       case 'budget':
-        // For budget selection
         handleInputChange("budget", value);
         break;
       case 'travelType':
-        // For travel type selection
         const travelOption = SelectTravelList.find(
           option => option.title.toLowerCase() === value.toLowerCase()
         );
@@ -173,141 +169,150 @@ const index = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-gradient-to-b from-blue-100 to-gray-100 min-h-screen py-8 px-4">
-      {/* Heading */}
-      <div className="mt-8 text-center w-full max-w-2xl">
-        <h1 className="font-bold text-blue-900 text-4xl mb-4">
-          Travel Preferences 🚢✈️⛱️
-        </h1>
-        <p className="text-gray-700 text-lg mb-8">
-          Help us understand your travel plans by providing some details below.
-          You can type or use voice input for each field.
-        </p>
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-blue-50 to-white">
+      {/* Header Section */}
+      <div className="w-full bg-white shadow-sm py-6 mb-8">
+        <div className="max-w-6xl mx-auto px-4">
+          <h1 className="text-4xl font-bold text-indigo-900 flex items-center gap-3">
+            Travel Preferences
+            <span className="flex gap-2">
+              <span className="text-3xl">🚢</span>
+              <span className="text-3xl">✈️</span>
+              <span className="text-3xl">⛱️</span>
+            </span>
+          </h1>
+          <p className="mt-2 text-gray-600 text-lg">
+            Help us understand your travel plans by providing some details below. You can type or use voice input for each field.
+          </p>
+        </div>
       </div>
 
-      {/* Destination Choice */}
-      <div className="flex flex-col w-full max-w-2xl mb-8">
-        <label className="text-black text-2xl font-semibold mb-2 flex items-center gap-2">
-          What is your Destination?
-          <VoiceInputButton
-            onTranscript={handleVoiceInput}
-            className="ml-2"
-          />
-        </label>
-        <GooglePlacesAutocomplete
-          apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
-          // apiKey="AIzaSyBFjMkBwjvDo17f7CxraTuax2UufVKPUJ0"
-          selectProps={{
-            placeholder: "Search for places...",
-            onChange: handleSelect,
-            value: place,
-          }}
-        />
-      </div>
-
-      {/* Number of Days */}
-      <div className="flex flex-col w-full max-w-2xl mb-8">
-        <label className="text-black text-2xl font-semibold mb-2 flex items-center gap-2">
-          For how many days are you planning?
-          <VoiceInputButton
-            onTranscript={handleVoiceInput}
-            className="ml-2"
-          />
-        </label>
-        <Input
-          placeholder="e.g., 6"
-          type="number"
-          value={formData.noOfDays || ""}
-          onChange={(e) => handleInputChange("noOfDays", e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-
-      {/* Budget */}
-      <div className="flex flex-col w-full max-w-2xl mb-8">
-        <div className="flex items-center gap-2 mb-4">
-          <h2 className="text-black text-2xl font-semibold">
-            What is your budget?
-          </h2>
-          <VoiceInputButton
-            onTranscript={handleVoiceInput}
-            className="ml-2"
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 pb-16 space-y-12">
+        {/* Destination Section */}
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <label className="flex items-center gap-3 mb-4">
+            <span className="text-2xl font-semibold text-indigo-900">What is your Destination?</span>
+            <VoiceInputButton onTranscript={handleVoiceInput} />
+          </label>
+          <GooglePlacesAutocomplete
+            apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+            selectProps={{
+              placeholder: "Search for places...",
+              onChange: handleSelect,
+              value: place,
+              styles: {
+                control: (provided) => ({
+                  ...provided,
+                  borderRadius: '0.5rem',
+                  borderColor: '#E2E8F0',
+                  padding: '0.25rem',
+                  boxShadow: 'none',
+                  '&:hover': {
+                    borderColor: '#CBD5E0'
+                  }
+                })
+              }
+            }}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {SelectBudgetOptions.map((item, index) => (
-            <div
-              key={index}
-              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${formData?.budget === item.title
-                  ? "shadow-lg bg-blue-600 text-white"
-                  : "bg-white"
-                }`}
-              onClick={() => handleInputChange("budget", item.title)}
-            >
-              <div className="flex flex-col items-center text-center">
-                <div className="text-4xl mb-2">{item.icon}</div>
-                <h2 className="text-lg font-bold mb-1">{item.title}</h2>
-                <p className="text-sm">{item.desc}</p>
+
+        {/* Days Section */}
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <label className="flex items-center gap-3 mb-4">
+            <span className="text-2xl font-semibold text-indigo-900">For how many days are you planning?</span>
+            <VoiceInputButton onTranscript={handleVoiceInput} />
+          </label>
+          <Input
+            placeholder="e.g., 6"
+            type="number"
+            value={formData.noOfDays || ""}
+            onChange={(e) => handleInputChange("noOfDays", e.target.value)}
+            className="max-w-xs text-lg py-6"
+          />
+        </div>
+
+        {/* Budget Section */}
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="text-2xl font-semibold text-indigo-900">What is your budget?</h2>
+            <VoiceInputButton onTranscript={handleVoiceInput} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {SelectBudgetOptions.map((item, index) => (
+              <div
+                key={index}
+                className={`rounded-xl transition-all duration-300 p-6 cursor-pointer hover:shadow-lg border-2 
+                  ${formData?.budget === item.title
+                    ? "border-indigo-500 bg-indigo-50"
+                    : "border-gray-100 hover:border-indigo-200"
+                  }`}
+                onClick={() => handleInputChange("budget", item.title)}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2 text-indigo-900">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Number of People */}
-      <div className="flex flex-col w-full max-w-2xl mb-8">
-        <div className="flex items-center gap-2 mb-4">
-          <h2 className="text-black text-2xl font-semibold">
-            Who do you plan on travelling with?
-          </h2>
-          <VoiceInputButton
-            onTranscript={handleVoiceInput}
-            className="ml-2"
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {SelectTravelList.map((item, index) => (
-            <div
-              key={index}
-              className={`rounded-xl border-2 border-transparent hover:border-blue-500 hover:bg-white transition-all duration-300 p-6 cursor-pointer ${formData?.noOfPeople === item.people
-                  ? "shadow-lg bg-blue-600 text-white"
-                  : "bg-white"
-                }`}
-              onClick={() => handleInputChange("noOfPeople", item.people)}
-            >
-              <div className="flex items-center justify-center">
-                <div className="text-4xl mr-2">{item.icon}</div>
-                <h2 className="text-lg font-bold">{item.title}</h2>
+        {/* Travel Group Section */}
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="text-2xl font-semibold text-indigo-900">Who do you plan on travelling with?</h2>
+            <VoiceInputButton onTranscript={handleVoiceInput} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {SelectTravelList.map((item, index) => (
+              <div
+                key={index}
+                className={`rounded-xl transition-all duration-300 p-6 cursor-pointer hover:shadow-lg border-2
+                  ${formData?.noOfPeople === item.people
+                    ? "border-indigo-500 bg-indigo-50"
+                    : "border-gray-100 hover:border-indigo-200"
+                  }`}
+                onClick={() => handleInputChange("noOfPeople", item.people)}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2 text-indigo-900">{item.title}</h3>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
               </div>
-              <p className="text-center mt-2">{item.desc}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Generate Trip Button */}
-      <div className="flex justify-center w-full max-w-2xl">
-        <Button
-          onClick={onGenerateTrip}
-          disabled={loading}
-          className="w-full py-3 text-lg"
-        >
-          {loading ? "Generating Trip..." : "Generate Trip"}
-        </Button>
+        {/* Generate Button */}
+        <div className="flex justify-center">
+          <Button
+            onClick={onGenerateTrip}
+            disabled={loading}
+            className="px-12 py-6 text-xl bg-indigo-600 hover:bg-indigo-700 transition-colors duration-300"
+          >
+            {loading ? "Generating Trip..." : "Generate Trip"}
+          </Button>
+        </div>
       </div>
 
       {/* Sign In Dialog */}
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Sign In Required</DialogTitle>
+            <DialogTitle className="text-2xl font-bold text-center">Sign In Required</DialogTitle>
             <DialogDescription>
-              <div className="flex flex-col items-center">
-                <img src="/logo.png" alt="Logo" className="w-20 mb-4" />
-                <p className="text-center mb-4">
+              <div className="flex flex-col items-center mt-4">
+                <img src="/logo.png" alt="Logo" className="w-24 h-24 mb-6" />
+                <p className="text-center text-gray-600 mb-6">
                   Please sign in with Google to generate your personalized trip plan.
                 </p>
-                <Button onClick={() => login()} className="w-full">
+                <Button 
+                  onClick={() => login()} 
+                  className="w-full py-6 text-lg bg-indigo-600 hover:bg-indigo-700"
+                >
                   Sign in with Google
                 </Button>
               </div>
@@ -319,4 +324,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default TravelPreferences;
