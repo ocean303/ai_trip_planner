@@ -25,8 +25,9 @@ const EmergencyServices = () => {
   const fetchEmergencyServices = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/emergency-services?location=${encodeURIComponent(trip.userChoice.location.label)}`
+        `http://localhost:5000/api/emergency-services?location=${encodeURIComponent(trip.userChoice.location.label)}`
       );
+      console.log(response);
       const data = await response.json();
       setEmergencyServices({
         hospitals: data.filter(service => service.type === "Hospital"),
@@ -43,7 +44,7 @@ const EmergencyServices = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
     let yOffset = 20;
-    
+
     // Add title
     doc.setFontSize(20);
     doc.text('Emergency Services Directory', 20, yOffset);
@@ -112,11 +113,10 @@ const EmergencyServices = () => {
         {tabs.map((tab) => (
           <button
             key={tab.key}
-            className={`px-4 py-2 rounded-md flex items-center space-x-2 transition-all ${
-              activeTab === tab.key
-                ? "bg-blue-600 text-white shadow-lg"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={`px-4 py-2 rounded-md flex items-center space-x-2 transition-all ${activeTab === tab.key
+              ? "bg-blue-600 text-white shadow-lg"
+              : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => setActiveTab(tab.key)}
           >
             {tab.icon} <span>{tab.label}</span>

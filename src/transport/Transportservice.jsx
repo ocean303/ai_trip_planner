@@ -8,6 +8,7 @@ const TransportPage = () => {
     const location = useLocation();
 
     const trip = location.state?.trip;
+    console.log(trip.userChoice.location.label);
     const [source, setSource] = useState('');
     const [date, setDate] = useState('');
     const [flights, setFlights] = useState([]);

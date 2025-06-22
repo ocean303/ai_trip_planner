@@ -67,9 +67,9 @@ const ImmediateEmergency = () => {
   const fetchEmergencyServices = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/emergency-services/nearby?lat=${userLocation.latitude}&lng=${userLocation.longitude}`
+        `http://localhost:5000/api/emergency-services/nearby?lat=${userLocation.latitude}&lng=${userLocation.longitude}`
       );
-      
+      console.log(response);
       if (!response.ok) {
         throw new Error('Failed to fetch emergency services');
       }
@@ -100,7 +100,7 @@ const ImmediateEmergency = () => {
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
           <p>{error}</p>
           {error.includes("location services") && (
-            <button 
+            <button
               onClick={getUserLocation}
               className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
             >
@@ -137,11 +137,10 @@ const ImmediateEmergency = () => {
         {tabs.map((tab) => (
           <button
             key={tab.key}
-            className={`px-4 py-2 rounded-md flex items-center space-x-2 transition-all ${
-              activeTab === tab.key
+            className={`px-4 py-2 rounded-md flex items-center space-x-2 transition-all ${activeTab === tab.key
                 ? "bg-red-600 text-white shadow-lg"
                 : "bg-gray-200 text-gray-700"
-            }`}
+              }`}
             onClick={() => setActiveTab(tab.key)}
           >
             {tab.icon} <span>{tab.label}</span>
@@ -182,8 +181,8 @@ const ImmediateEmergency = () => {
                 </p>
                 <div className="flex items-center text-blue-600 mt-2">
                   <FiPhone className="mr-2" />
-                  <a 
-                    href={`tel:${service.phone}`} 
+                  <a
+                    href={`tel:${service.phone}`}
                     className="hover:underline font-medium"
                   >
                     {service.phone || "No phone available"}
